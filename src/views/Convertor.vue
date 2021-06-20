@@ -31,11 +31,10 @@
                   />
 
                   <v-autocomplete
-                    v-model="firstVal"
-                    items="newArr"
+                    v-model="firstVal.name"
+                    :items="newArr"
                     item-text="name"
                     item-value="name"
-                    return-object
                     dense
                     filled
                     @input="sendVal"
@@ -48,12 +47,10 @@
                 >
 
                 <v-col class="d-flex align-top" cols="5">
-                  <span class="pa-3">{{
-                    String(valueСourse) * this.valRate
-                  }}</span>
+                  <span class="pa-3">{{ getCourse.toFixed(4) }}</span>
                   <v-autocomplete
-                    v-model="secondVal"
-                    items="newArr"
+                    v-model="secondVal.name"
+                    :items="newArr"
                     item-text="name"
                     item-value="name"
                     dense
@@ -64,6 +61,7 @@
               </v-row>
             </v-col>
           </v-row>
+
           <!-- <div class="">{{ diffCurrency }}</div> -->
         </v-list-item-content>
       </v-list-item>
@@ -72,17 +70,102 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex'
+
 export default {
-  name: 'Convertor',
-  data() {
-    return {
-      valRate: 1,
-      nameVal: 'EURO',
-      nameValSecond: 'RUB',
-      firstVal: { name: 'EUR' },
-      secondVal: { name: 'RUB' },
-      items: []
-    }
+  name: 'Corrector',
+  data: () => ({
+    valRate: 1,
+    nameVal: 'EURO',
+    firstVal: {
+      name: 'EUR'
+    },
+    nameValSecond: 'RUB',
+    secondVal: {
+      name: 'RUB'
+    },
+    items: []
+  }),
+
+  created() {
+    //this.getCurr(),
+    this.getVal(),
+      this.setVal({
+        first: this.firstVal.name,
+        second: this.secondVal.name
+      }),
+      //this.$store.commit('currency/CHECK_CURRENCY', 'EUR')
+      this.getHistoryCourse({
+        first: this.firstVal.name,
+        second: this.secondVal.name,
+        date: this.getDate
+      })
+  },
+
+  methods: {
+    sendVal(e) {
+      this.$store.commit('currency/CHECK_CURRENCY', e)
+      this.setVal({
+        first: this.firstVal.name,
+        second: this.secondVal.name
+      })
+      this.getHistoryCourse({
+        first: this.firstVal.name,
+        second: this.secondVal.name,
+        date: this.getDate
+      })
+    },
+    toggleVal() {
+      [this.firstVal.name, this.secondVal.name] = [
+        this.secondVal.name,
+        this.firstVal.name
+      ]
+      this.setVal({
+        first: this.firstVal.name,
+        second: this.secondVal.name
+      })
+      this.getHistoryCourse({
+        first: this.firstVal.name,
+        second: this.secondVal.name,
+        date: this.getDate
+      })
+    },
+    ...mapActions({
+      //getCurr: 'currency/getCurrency',
+      getVal: 'currency/getVal',
+      setVal: 'currency/setVal',
+      getHistoryCourse: 'currency/getHistoryCourse'
+    })
+  },
+  computed: {
+    getCourse() {
+      return this.valueСourse * this.valRate
+    },
+    getDate() {
+      let d = new Date()
+      d.setDate(d.getDate() - 3)
+      return d.toLocaleDateString('fr-CA')
+    },
+    diffCurrency() {
+      return Object.entries(this.historyCurrency).map(element => {
+        return element[1] - this.valueСourse
+      })
+    },
+    ...mapState({
+      //currencyState: state => state.currency.checkCurrency,
+      // correct: state => state.currency.correct,
+      // currency: state => state.currency.currency,
+      listCurrency: state => state.currency.listCurrency,
+      valueСourse: state => state.currency.valueСourse,
+      historyCurrency: state => state.currency.historyCurrency
+    }),
+    ...mapGetters({
+      //getListCurrency: state => state.currency.getListCurrency
+      //check: 'currency/getSelectParam',
+      newArr: 'currency/newArr'
+    })
   }
 }
 </script>
+
+<style lang="scss" scoped></style>

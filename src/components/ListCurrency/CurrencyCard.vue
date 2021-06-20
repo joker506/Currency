@@ -4,7 +4,9 @@
       <v-list-item-content>
         <v-row>
           <v-card-subtitle class="text-overline"
-            >{{ firstVal.currencyName ? firstVal.currencyName : nameVal }}
+            >{{
+              firstVal.name.currencyName ? firstVal.name.currencyName : nameVal
+            }}
           </v-card-subtitle>
           <v-spacer></v-spacer>
           <v-card-subtitle>
@@ -83,7 +85,10 @@ export default {
   created() {
     //this.getCurr(),
     this.getVal(),
-      this.setVal({ first: this.firstVal.name, second: this.secondVal.name }),
+      this.setVal({
+        first: this.firstVal.name,
+        second: this.secondVal.name
+      }),
       //this.$store.commit('currency/CHECK_CURRENCY', 'EUR')
       this.getHistoryCourse({
         first: this.firstVal.name,
