@@ -1,8 +1,9 @@
 import baseURL from '@/api/baseURL'
 
 export default {
+  key: '9536afd583213470fc7e',
   getVl() {
-    return baseURL().get('currencies?apiKey=9536afd583213470fc7e')
+    return baseURL().get('currencies?apiKey=' + this.key)
   },
   getCourse(params) {
     return baseURL().get(
@@ -10,7 +11,8 @@ export default {
         params.first +
         '_' +
         params.second +
-        '&compact=ultra&apiKey=9536afd583213470fc7e'
+        '&compact=ultra&apiKey=' +
+        this.key
     )
   },
   historyCourse(params) {
@@ -21,7 +23,8 @@ export default {
         params.second +
         '&compact=ultra&date=' +
         params.date +
-        '&apiKey=9536afd583213470fc7e'
+        '&apiKey=' +
+        this.key
     )
   }
 }

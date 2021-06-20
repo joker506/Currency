@@ -66,6 +66,7 @@ const currency = {
   },
   actions: {
     setVal({ commit }, payload) {
+      //console.log(payload)
       return Api.getCourse(payload).then(response => {
         //console.log(response.data)
         commit('VALUE_COURSE', Object.values(response.data))
@@ -93,12 +94,12 @@ const currency = {
     // }
     getVal({ commit }) {
       return Api.getVl().then(result => {
-        console.log(result.data.results)
+        //console.log(result.data.results)
         commit('LIST_CURRENCY', result.data.results)
       })
     },
     getHistoryCourse({ commit }, payload) {
-      console.log(payload)
+      //console.log(payload)
       return Api.historyCourse(payload).then(result => {
         commit('HISTORY_CURRENCY', result.data[Object.keys(result.data)])
       })
