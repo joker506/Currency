@@ -4,10 +4,9 @@
       <v-list-item-content>
         <v-row>
           <v-card-subtitle class="text-overline"
-            >{{
-              firstVal.name.currencyName ? firstVal.name.currencyName : nameVal
-            }}
+            >{{ firstVal.name ? firstVal.name : nameVal }}
           </v-card-subtitle>
+
           <v-spacer></v-spacer>
           <v-card-subtitle>
             <div class="">
@@ -49,15 +48,9 @@
                 ></v-autocomplete>
               </v-col>
             </v-row>
-            <!-- <button @click="getVal">getVal</button> -->
-            <!-- <v-list-item-subtitle class="text-center pa-3"
-              ><span>12</span> {{ secondVal }}
-            </v-list-item-subtitle> -->
           </v-col>
         </v-row>
       </v-list-item-content>
-      <!-- <p>{{ newArr }}</p> -->
-      <!-- <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar> -->
     </v-list-item>
   </v-card>
 </template>
@@ -83,13 +76,11 @@ export default {
   },
 
   created() {
-    //this.getCurr(),
     this.getVal(),
       this.setVal({
         first: this.firstVal.name,
         second: this.secondVal.name
       }),
-      //this.$store.commit('currency/CHECK_CURRENCY', 'EUR')
       this.getHistoryCourse({
         first: this.firstVal.name,
         second: this.secondVal.name,
@@ -126,7 +117,6 @@ export default {
       })
     },
     ...mapActions({
-      //getCurr: 'currency/getCurrency',
       getVal: 'currency/getVal',
       setVal: 'currency/setVal',
       getHistoryCourse: 'currency/getHistoryCourse'
@@ -135,7 +125,7 @@ export default {
   computed: {
     getDate() {
       let d = new Date()
-      d.setDate(d.getDate() - 3)
+      d.setDate(d.getDate() - 1)
       return d.toLocaleDateString('fr-CA')
     },
     diffCurrency() {
@@ -144,16 +134,11 @@ export default {
       })
     },
     ...mapState({
-      //currencyState: state => state.currency.checkCurrency,
-      // correct: state => state.currency.correct,
-      // currency: state => state.currency.currency,
       listCurrency: state => state.currency.listCurrency,
       valueСourse: state => state.currency.valueСourse,
       historyCurrency: state => state.currency.historyCurrency
     }),
     ...mapGetters({
-      //getListCurrency: state => state.currency.getListCurrency
-      //check: 'currency/getSelectParam',
       newArr: 'currency/newArr'
     })
   }

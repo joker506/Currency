@@ -5,20 +5,13 @@
         <v-list-item-content>
           <v-row>
             <v-card-subtitle class="text-overline col-6"
-              >{{ firstVal.currencyName ? firstVal.currencyName : nameVal }}
+              >{{ firstVal.name ? firstVal.name : nameVal }}
             </v-card-subtitle>
-            <!-- <v-spacer></v-spacer> -->
             <v-card-subtitle class="text-overline col-6"
               >{{
                 secondVal.currencyName ? secondVal.currencyName : nameValSecond
               }}
             </v-card-subtitle>
-
-            <!-- <v-card-subtitle>
-              <div class="" v-for="(i, idx) in historyCurrency" :key="idx">
-                <CurrencyRate :val="i" />
-              </div>
-            </v-card-subtitle> -->
           </v-row>
           <v-row>
             <v-col class="d-flex">
@@ -61,8 +54,6 @@
               </v-row>
             </v-col>
           </v-row>
-
-          <!-- <div class="">{{ diffCurrency }}</div> -->
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -88,13 +79,11 @@ export default {
   }),
 
   created() {
-    //this.getCurr(),
     this.getVal(),
       this.setVal({
         first: this.firstVal.name,
         second: this.secondVal.name
       }),
-      //this.$store.commit('currency/CHECK_CURRENCY', 'EUR')
       this.getHistoryCourse({
         first: this.firstVal.name,
         second: this.secondVal.name,
@@ -152,16 +141,11 @@ export default {
       })
     },
     ...mapState({
-      //currencyState: state => state.currency.checkCurrency,
-      // correct: state => state.currency.correct,
-      // currency: state => state.currency.currency,
       listCurrency: state => state.currency.listCurrency,
       valueСourse: state => state.currency.valueСourse,
       historyCurrency: state => state.currency.historyCurrency
     }),
     ...mapGetters({
-      //getListCurrency: state => state.currency.getListCurrency
-      //check: 'currency/getSelectParam',
       newArr: 'currency/newArr'
     })
   }
