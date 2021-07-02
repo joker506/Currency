@@ -4,12 +4,12 @@
       <v-list-item-content>
         <v-row>
           <v-card-subtitle class="text-overline"
-            >{{ firstVal.name ? firstVal.name : nameVal }}
+            >{{ firstVal.currencyName ? firstVal.currencyName : nameVal }}
           </v-card-subtitle>
 
           <v-spacer></v-spacer>
           <v-card-subtitle>
-            <div class="">
+            <div>
               <CurrencyRate :val="diffCurrency[0]" />
             </div>
           </v-card-subtitle>
@@ -19,60 +19,94 @@
             <v-row>
               <v-col class="d-flex align-top" cols="5">
                 <span class="pa-3">1</span>
-                <v-autocomplete
-                  v-model="firstVal.name"
-                  :items="newArr"
-                  item-text="name"
-                  item-value="name"
-                  dense
-                  filled
-                  @input="sendVal"
-                ></v-autocomplete>
+                <div class="">
+                  <AutoCompleat
+                    :value="firstVal.name"
+                    :currencyItems="newArr"
+                    @onSend="sendFirstVal"
+                  />
+                  <span>{{ firstVal.name }}</span>
+                </div>
               </v-col>
-              <v-col cols="2" class="text-center mt-1"
-                ><v-btn @click="toggleVal">
-                  <v-icon>mdi-arrow-left-right</v-icon>
-                </v-btn></v-col
-              >
+              <v-col cols="2" class="text-center ">
+                <Button
+                  class="btn_small"
+                  title=""
+                  iconElement="mdi-arrow-left-right"
+                  colorIcon="#f3f3f3"
+                  @click="toggleVal"
+                />
+              </v-col>
 
               <v-col class="d-flex align-top" cols="5">
                 <span class="pa-3">{{ String(valueСourse) }}</span>
-                <v-autocomplete
-                  v-model="secondVal.name"
-                  :items="newArr"
-                  item-text="name"
-                  item-value="name"
-                  dense
-                  filled
-                  @input="sendVal"
-                ></v-autocomplete>
+                <div class="">
+                  <AutoCompleat
+                    :value="secondVal.name"
+                    :currencyItems="newArr"
+                    @onSend="sendSecondVal"
+                  />
+                  <span>{{ secondVal.name }}</span>
+                </div>
               </v-col>
             </v-row>
           </v-col>
         </v-row>
       </v-list-item-content>
     </v-list-item>
+    <!-- <BarChat
+      :chartdata="this.$store.state.historyCurrency"
+      :options="chartOptions"
+    /> -->
   </v-card>
 </template>
 
 <script>
+import Button from '@/components/UI/Button'
+import AutoCompleat from '@/components/UI/AutoCompleat'
+//import BarChat from '@/components/ListCurrency/BarChat'
 import CurrencyRate from '@/components/ListCurrency/CurrencyRate'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'CurrencyCard',
   data: () => ({
+    chartData: {
+      // labels: [
+      //   'January',
+      //   'February',
+      //   'March',
+      //   'April',
+      //   'May',
+      //   'June',
+      //   'July',
+      //   'August',
+      //   'September',
+      //   'October',
+      //   'November',
+      //   'December'
+      // ]
+    },
+
+    options: { responsive: true, maintainAspectRatio: false },
+
     nameVal: 'EURO',
     firstVal: {
-      name: 'EUR'
+      name: 'EUR',
+      currencyName: ''
     },
     secondVal: {
-      name: 'RUB'
+      name: 'RUB',
+      currencyName: ''
     },
     items: []
   }),
   components: {
-    CurrencyRate
+    CurrencyRate,
+    AutoCompleat,
+    Button
+
+    //BarChat
   },
 
   created() {
@@ -89,7 +123,22 @@ export default {
   },
 
   methods: {
+    sendFirstVal(e) {
+      console.log(e)
+      this.firstVal.name = e.name
+      this.firstVal.currencyName = e.currencyName
+      this.sendVal()
+    },
+    sendSecondVal(e) {
+      console.log(e)
+      this.secondVal.name = e.name
+      this.secondVal.currencyName = e.currencyName
+
+      this.sendVal()
+    },
+
     sendVal(e) {
+      console.log(e)
       this.$store.commit('currency/CHECK_CURRENCY', e)
       this.setVal({
         first: this.firstVal.name,
