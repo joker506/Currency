@@ -1,15 +1,19 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+    >
       <List />
     </v-navigation-drawer>
-
-    <v-app-bar app color="primary" dark>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
-
     <v-main>
       <router-view />
     </v-main>
@@ -19,14 +23,10 @@
 <script>
 import List from '@/components/List'
 export default {
-  name: 'default',
+  name: 'Default',
+  components: { List },
   data: () => ({
     drawer: true
-  }),
-  components: {
-    List
-  }
+  })
 }
 </script>
-
-<style lang="scss" scoped></style>

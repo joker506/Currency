@@ -1,10 +1,15 @@
 <template>
   <div>
-    <v-chip class="ma-2" :color="arrowUpDown" label text-color="white">
+    <v-chip
+      class="ma-2"
+      :color="arrowUpDownColor"
+      label
+      text-color="white"
+    >
       <v-icon left>
-        {{ val > 0 ? 'mdi-arrow-up' : 'mdi-arrow-down' }}
+        {{ arrowUpDownIcon }}
       </v-icon>
-      {{ val.toFixed(6) }}
+      {{ diffValue.toFixed(6) }}
     </v-chip>
   </div>
 </template>
@@ -13,22 +18,18 @@
 export default {
   name: 'CurrencyRate',
   props: {
-    val: {
+    diffValue: {
       type: Number,
       default: 0
     }
   },
-
   computed: {
-    arrowUpDown() {
-      if (this.val > 0) {
-        return 'green'
-      } else {
-        return 'pink'
-      }
+    arrowUpDownColor() {
+      return this.diffValue > 0 ? 'green' : 'pink'
+    },
+    arrowUpDownIcon() {
+      return this.diffValue > 0 ? 'mdi-arrow-up' : 'mdi-arrow-down'
     }
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

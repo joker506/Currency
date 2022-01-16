@@ -1,20 +1,26 @@
 <template>
-  <div class="btn" :class="[`btn_${size}`]" @click="clickBtn">
-    <v-icon :color="colorIcon">{{ iconElement }}</v-icon>
-    <span>{{ title }}</span>
+  <div
+    class="btn"
+    :class="sizeClass"
+    @click="clickBtn"
+  >
+    <v-icon :color="colorIcon">
+      {{ iconElement }}
+    </v-icon>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Button',
+  name: 'AppButton',
   props: {
     title: {
       type: String,
       default: 'Button'
     },
     iconElement: {
-      type: String
+      type: String,
+      required: true
     },
     colorIcon: {
       type: String,
@@ -23,6 +29,11 @@ export default {
     size: {
       type: String,
       default: 'small'
+    }
+  },
+  computed: {
+    sizeClass() {
+      return `btn_${this.size}`
     }
   },
   methods: {
@@ -50,6 +61,7 @@ export default {
   }
   &_medium {
     padding: 20px 26px;
+    border-radius: 7%;
     background: darkcyan;
   }
 }

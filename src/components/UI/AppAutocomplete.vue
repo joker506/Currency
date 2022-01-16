@@ -2,43 +2,43 @@
   <div>
     <v-autocomplete
       :value="value"
-      @input="onSend"
       :items="currencyItems"
       item-text="name"
       item-value="name"
       return-object
       dense
       filled
-    ></v-autocomplete>
+      @input="onSend"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Autocompleat',
+  name: 'AppAutocomplete',
 
   props: {
     value: {
       type: String,
-      required: true
+      default: 'None'
     },
     currencyItems: {
       type: Array,
       default: () => {}
     },
     itemText: {
-      type: String
+      type: String,
+      default: 'None'
     },
     itemValue: {
-      type: String
+      type: String,
+      default: 'None'
     }
   },
   methods: {
     onSend(event) {
-      this.$emit('input', event.name), this.$emit('onSend', event)
+      this.$emit('onSend', event)
     }
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

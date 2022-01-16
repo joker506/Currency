@@ -1,12 +1,12 @@
-import baseURL from '@/api/baseURL'
+import HTTP from '@/api/baseURL'
 
 export default {
   key: '9536afd583213470fc7e',
   getVl() {
-    return baseURL().get('currencies?apiKey=' + this.key)
+    return HTTP().get('currencies?apiKey=' + this.key)
   },
   getCourse(params) {
-    return baseURL().get(
+    return HTTP().get(
       'convert?q=' +
         params.first +
         '_' +
@@ -16,7 +16,7 @@ export default {
     )
   },
   historyCourse(params) {
-    return baseURL().get(
+    return HTTP().get(
       'convert?q=' +
         params.first +
         '_' +
